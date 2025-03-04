@@ -13,6 +13,9 @@
 #include "philox.cuh"
 #include "utils.h"
 
+// Debug
+#include <cstdio>
+
 namespace flash {
 
 using namespace cute;
@@ -82,8 +85,12 @@ __forceinline__ __device__ void scale_apply_exp2(Tensor<Engine0, Layout0> &tenso
             // See: https://github.com/pytorch/pytorch/issues/121558 for more details
             // This macro is set in PyTorch and not FlashAttention
             #ifdef UNFUSE_FMA
+                std::printf("--- UNFUSE_FMA if branch ---\n");
+
                 tensor(mi, ni) = exp2f(__fmul_rn(tensor(mi, ni), scale) - max_scaled);
             #else
+                std::printf("--- Not UNFUSE_FMA if branch ---\n");
+
                 tensor(mi, ni) = exp2f(tensor(mi, ni) * scale - max_scaled);
             #endif
         }
