@@ -190,6 +190,7 @@ if not SKIP_CUDA_BUILD:
         "-lineinfo",
         "-DCUTLASS_DEBUG_TRACE_LEVEL=0",  # Can toggle for debugging
         "-DNDEBUG",  # Important, otherwise performance is severely impacted
+        "-DUNFUSE_FMA",
     ]
     if get_platform() == "win_amd64":
         nvcc_flags.extend(
@@ -212,7 +213,7 @@ if not SKIP_CUDA_BUILD:
             name="flashattn_hopper_cuda",
             sources=sources,
             extra_compile_args={
-                "cxx": ["-O3", "-std=c++17"],
+                "cxx": ["-O3", "-std=c++17", "-DUNFUSE_FMA"],
                 # "cxx": ["-O0", "-std=c++17"],
                 "nvcc": append_nvcc_threads(
                     nvcc_flags + cc_flag
