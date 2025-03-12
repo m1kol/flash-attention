@@ -14,7 +14,7 @@
 #include "utils.h"
 
 // Debug
-// #include <cstdio>
+#include <cstdio>
 
 namespace flash {
 
@@ -97,6 +97,7 @@ __forceinline__ __device__ void scale_apply_exp2(Tensor<Engine0, Layout0> &tenso
             #endif
             */
 
+            std::printf("--- FA 2 unfused FMA impl ---\n");
             tensor(mi, ni) = exp2f(__fmul_rn(tensor(mi, ni), scale) - max_scaled);
         }
     }
