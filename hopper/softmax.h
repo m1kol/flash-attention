@@ -14,7 +14,7 @@
 
 #include "cutlass/fast_math.h"
 
-#include <cstdio>
+// #include <cstdio>
 
 namespace flash {
 
@@ -127,7 +127,7 @@ __forceinline__ __device__ void scale_apply_exp2(Tensor<Engine0, Layout0> &tenso
             // tensor(mi, ni) = exp2f(tensor(mi, ni) * scale - max_scaled);
 
             // UFUSE FMA calculation variant
-            std::printf("--- FA 3 unfused FMA impl ---\n");
+            // std::printf("--- FA 3 unfused FMA impl ---\n");
             tensor(mi, ni) = exp2f(__fmul_rn(tensor(mi, ni), scale) - max_scaled);
         }
     }
